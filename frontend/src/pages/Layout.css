@@ -1,0 +1,21 @@
+.Layout {
+    text-align: center;
+    margin: auto;
+  }
+
+a:link, a:visited {
+    background-color: #4678c9;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  
+  a:hover, a:active {
+    background-color: blue;
+  }
+
+
+  
