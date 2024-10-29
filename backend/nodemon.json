@@ -1,6 +1,0 @@
-{
-    "watch": ["app.js", "routes/", "models/"],
-    "ext": "js,json",
-    "exec": "node app.js"
-  }
-  
