@@ -1,5 +1,6 @@
 /*import logo from './logo.svg';
 import './App.css';*/
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
@@ -9,6 +10,16 @@ import Dashboard from "./pages/private/Dashboard"
 import Login from "./pages/Login/Login";
 
 function App() {
+  const [items, setItems] = useState([])
+  useEffect( () => {
+    const fetchData = async() => {
+      const res = await fetch('https://localhost:3000')
+      const data = await res.json()
+      setItems(data.items)
+
+    }
+    fetchData();
+  }, [])
   return (
       <BrowserRouter>
       <Routes> 
@@ -17,7 +28,13 @@ function App() {
           <Route path="recipes" element={<Recipes />} />
           <Route path="products" element={<Products />} />
           <Route path="dashboard" element={<Dashboard />} /> 
-          <Route path="login" element={<Login />} /> 
+          <Route path="login" element={<Login />}> 
+           <p>
+           {items.map(i => (
+            <p>{i.username}, {i.password}</p>
+           )) }
+           </p>
+          </Route> 
         </Route>
       </Routes>
     </BrowserRouter>
