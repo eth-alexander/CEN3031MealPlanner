@@ -8,8 +8,7 @@ function Layout() {
            <h1 className='Layout'> <a> <Link to="/">Home</Link> </a>
            <a> <Link to="/recipes">Recipes</Link> </a>
            <a> <Link to="/products">Products</Link> </a> 
-           <a><Link to="/dashboard">Dashboard</Link></a>
-           <a><Link to="/login">Login</Link></a> </h1>
+           <a><Link to="/dashboard">Dashboard</Link></a> </h1>
       </nav>
 
       <Outlet />

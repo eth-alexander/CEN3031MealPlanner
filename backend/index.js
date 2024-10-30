@@ -2,7 +2,7 @@
 
 const express = require('express')
 const connectDB = require('./db.js')
-const itemModel = require('./models/Users.js')
+const userModel = require('./models/User.js')
 const cors = require('cors')
 
 const app = express()
@@ -10,10 +10,22 @@ app.use(express.json())
 app.use(cors())
 connectDB()
 
-app.get('/', (req, res) => {
-    const users = userModel.find()
-    res.json(users)
-})
+app.use('/login', (req, res) => {
+    res.send({
+      token: 'test123'
+    });
+});
+
+app.get('/users', async (req, res) => {
+    try {
+        const users = await userModel.find(); // Fetch all users
+        res.status(200).json(users); // Send the users as a JSON response
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).send({ error: 'Failed to fetch users.' });
+    }
+});
+  
 
 app.listen(5000, () => {
     console.log("app is running");
