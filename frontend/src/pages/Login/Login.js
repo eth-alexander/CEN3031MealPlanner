@@ -1,7 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 
-const Login = (props) => {
+let match = false;
+
+async function loginUser(credentials) {
+
+  const fetchData = async () => {
+
+    await fetch('http://localhost:5000/users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          if (credentials.username === data[i].username) {
+            console.log(credentials.username)
+            if (credentials.password === data[i].password) {
+              console.log(credentials.password)
+              match = true;
+             }
+             
+            }
+          }
+        
+      })
+  }
+
+  await fetchData();
+
+  if (match) {
+    return fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+  }
+  else {
+    return 'F'
+  }
+}
+
+export default function Login ({setToken}) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [UsernameError, setUsernameError] = useState('')
@@ -9,9 +56,20 @@ const Login = (props) => {
 
   //const navigate = useNavigate()
 
-  const onButtonClick = () => {
+  const onButtonClick = async e => {
+    e.preventDefault();
+    const token = await loginUser({
+      username,
+      password
+    });
+    setToken(token); 
+    
     setUsernameError('')
     setPasswordError('')
+
+    if (token === 'F') {
+       setUsernameError('No matching account') //may want to expand on this
+    }
 
     if ('' === username) {
       setUsernameError('Please enter your username')
@@ -27,7 +85,7 @@ const Login = (props) => {
   return (
     <div className={'mainContainer'}>
       <div className={'titleContainer'}>
-        <div>Login</div>
+        <div>Login to CHOMP</div>
       </div>
       <br />
       <div className={'inputContainer'}>
@@ -57,4 +115,6 @@ const Login = (props) => {
   )
 }
 
-export default Login
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
+}
