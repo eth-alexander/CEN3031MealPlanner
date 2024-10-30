@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 
+let match = false;
+
 async function loginUser(credentials) {
 
-  fetch('http://localhost:5000/users', {
+  const fetchData = async () => {
+
+    await fetch('http://localhost:5000/users', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -18,37 +22,31 @@ async function loginUser(credentials) {
             console.log(credentials.username)
             if (credentials.password === data[i].password) {
               console.log(credentials.password)
-              return fetch('http://localhost:5000/login', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(credentials)
-              })
-                .then(data => data.json())
-             }
-             else {
-              return 'F'
+              match = true;
              }
              
             }
           }
-})
-      
-  
+        
+      })
+  }
 
+  await fetchData();
 
-  return fetch('http://localhost:5000/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
- }
- 
-
+  if (match) {
+    return fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+  }
+  else {
+    return 'F'
+  }
+}
 
 export default function Login ({setToken}) {
   const [username, setUsername] = useState('')

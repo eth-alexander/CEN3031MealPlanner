@@ -26,6 +26,18 @@ app.get('/users', async (req, res) => {
     }
 });
   
+app.post('/users', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = new User({ username, password });
+        await user.save();
+        res.status(201).send(user);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error);
+    }
+});
 
 app.listen(5000, () => {
     console.log("app is running");
