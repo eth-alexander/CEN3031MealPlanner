@@ -2,7 +2,7 @@
 
 const express = require('express')
 const connectDB = require('./db.js')
-const userModel = require('./models/User.js')
+const userModel = require('./models/Users.js')
 const cors = require('cors')
 
 const app = express()
