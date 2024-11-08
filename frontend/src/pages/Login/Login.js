@@ -24,7 +24,6 @@ async function loginUser(credentials) {
               console.log(credentials.password)
               match = true;
              }
-             
             }
           }
         
