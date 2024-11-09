@@ -1,15 +1,18 @@
 // mongodb+srv://ethanalexander:<db_password>@chomp.1gyb9.mongodb.net/?retryWrites=true&w=majority&appName=CHOMP
 
-const express = require('express')
+const config = require("./config.json");
 const connectDB = require('./db.js')
-const userModel = require('./models/Users.js')
-const cors = require('cors')
-
-const app = express()
-app.use(express.json())
-app.use(cors())
 connectDB()
 /* hey */
+
+const userModel = require('./models/Users.js')
+
+const express = require('express')
+const cors = require('cors')
+const app = express()
+
+app.use(cors())
+app.use(express.json())
 
 app.use('/login', (req, res) => {
     res.send({
@@ -40,6 +43,6 @@ app.post('/users', async (req, res) => {
     }
 });
 
-app.listen(5000, () => {
+app.listen(5005, () => {
     console.log("app is running");
 })
