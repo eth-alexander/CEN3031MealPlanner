@@ -31,7 +31,7 @@ app.post('/users', async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = new User({ username, password });
+        const user = new userModel({ username, password });
         await user.save();
         res.status(201).send(user);
     } catch (error) {
