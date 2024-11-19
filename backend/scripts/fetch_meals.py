@@ -43,7 +43,7 @@ def generate_spreadsheet(filename, num_recipes):
     df.to_csv(filename, index_label='id')
     print("Spreadsheet generated")
 
-generate_spreadsheet('../data/meals.csv', 100)
+generate_spreadsheet('../data/meals.csv', 500)
 
 """ 
 idMeal: id
