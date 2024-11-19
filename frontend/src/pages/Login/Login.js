@@ -8,7 +8,7 @@ async function loginUser(credentials) {
 
   const fetchData = async () => {
 
-    await fetch('http://localhost:5000/users', {
+    await fetch('http://localhost:5005/users', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ async function loginUser(credentials) {
   await fetchData();
 
   if (match) {
-    return fetch('http://localhost:5000/login', {
+    return fetch('http://localhost:5005/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
