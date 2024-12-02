@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
 
 let match = false;
-
+let created = false;
 async function loginUser(credentials) {
 
   const fetchData = async () => {
@@ -24,7 +23,6 @@ async function loginUser(credentials) {
               console.log(credentials.password)
               match = true;
              }
-             
             }
           }
         
@@ -48,13 +46,31 @@ async function loginUser(credentials) {
   }
 }
 
+async function createUser(newUser) {
+  await fetch('http://localhost:5000/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newUser)
+  })
+    .then(data => {
+      data.json()
+      created = true
+      console.log(created)
+    })
+
+    if (created) {
+      return ('Account created. You may login.')
+    }
+}
+
 export default function Login ({setToken}) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [UsernameError, setUsernameError] = useState('')
   const [passwordError, setPasswordError] = useState('')
-
-  //const navigate = useNavigate()
+  const [account, setAccount] = useState('')
 
   const onButtonClick = async e => {
     e.preventDefault();
@@ -63,12 +79,13 @@ export default function Login ({setToken}) {
       password
     });
     setToken(token); 
+    console.log(token)
     
     setUsernameError('')
     setPasswordError('')
 
     if (token === 'F') {
-       setUsernameError('No matching account') //may want to expand on this
+       setUsernameError('Incorrect username or password') 
     }
 
     if ('' === username) {
@@ -77,15 +94,43 @@ export default function Login ({setToken}) {
     }
 
     if ('' === password) {
+      setPasswordError('Please enter your password')
+      return
+    }
+    
+  }
+
+  const clickCreate = async e =>  {
+    e.preventDefault();
+    
+    setUsernameError('')
+    setPasswordError('')
+
+    if ('' === username) {
+      setUsernameError('Please enter a username')
+      return
+    }
+
+    if ('' === password) {
       setPasswordError('Please enter a password')
       return
     }
+
+    const account = await createUser({
+      username,
+      password
+    });
+    console.log(account);
+    setAccount(account);
+    
   }
 
   return (
     <div className={'mainContainer'}>
       <div className={'titleContainer'}>
-        <div>Login to CHOMP</div>
+        <div>Login to CHOMP
+        <label className="errorLabel"> {account}</label>
+        </div>
       </div>
       <br />
       <div className={'inputContainer'}>
@@ -110,6 +155,11 @@ export default function Login ({setToken}) {
       <br />
       <div className={'inputContainer'}>
         <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
+      </div>
+      <br />
+      <div className={'inputContainer'}>
+        New user? Enter a username and password. Then click 'Create Account.'
+        <input className={'inputButton'} type="button" onClick={clickCreate} value={'Create Account'} />
       </div>
     </div>
   )
