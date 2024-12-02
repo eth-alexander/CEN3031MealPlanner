@@ -6,14 +6,10 @@ import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Products from "./pages/Products";
 import Dashboard from "./pages/private/Dashboard"
-import Login from "./pages/Login/Login";
-import useToken from './pages/Login/useToken';
+
 
 function App() {
-  const {token, setToken} = useToken();
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
+  
 
   return (
     <div>
