@@ -1,17 +1,18 @@
 // mongodb+srv://ethanalexander:<db_password>@chomp.1gyb9.mongodb.net/?retryWrites=true&w=majority&appName=CHOMP
 
 const config = require("./config.json");
-const connectDB = require('./db.js')
-connectDB()
+const connectDB = require('./db.js');
+connectDB();
 
-const userModel = require('./models/Users.js')
+const userModel = require('./models/User.js');
 
-const express = require('express')
-const cors = require('cors')
-const app = express()
+const express = require('express');
+const cors = require('cors');
+const mealModel = require("./models/Meal.js");
+const app = express();
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
 app.use('/login', (req, res) => {
     res.send({
@@ -21,8 +22,8 @@ app.use('/login', (req, res) => {
 
 app.get('/users', async (req, res) => {
     try {
-        const users = await userModel.find(); // Fetch all users
-        res.status(200).json(users); // Send the users as a JSON response
+        const users = await userModel.find();
+        res.status(200).json(users);
     } catch (error) {
         console.error('Error fetching users:', error);
         res.status(500).send({ error: 'Failed to fetch users.' });
@@ -33,7 +34,7 @@ app.post('/users', async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = new User({ username, password });
+        const user = new userModel({ username, password });
         await user.save();
         res.status(201).send(user);
     } catch (error) {
@@ -42,6 +43,17 @@ app.post('/users', async (req, res) => {
     }
 });
 
+app.get('/meals', async (req, res) => {
+    try {
+        const meals = await mealModel.find();
+        res.status(200).json(meals);
+    } catch (error) {
+        console.error('Error fetching meals:', error);
+        res.status(500).send({ error: 'Failed to fetch meals.' });
+    }
+});
+
+
 app.listen(5005, () => {
     console.log("app is running");
-})
+});
