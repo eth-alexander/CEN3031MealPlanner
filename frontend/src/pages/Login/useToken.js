@@ -1,19 +1,23 @@
 import { useState } from 'react';
 
 function useToken() {
-  // Get the token from localStorage when the component mounts
   const storedToken = localStorage.getItem('token');
   const [token, setToken] = useState(storedToken);
 
-  // Function to update the token and store it in localStorage
   const updateToken = (newToken) => {
     localStorage.setItem('token', newToken);
     setToken(newToken);
   };
 
+  const clearToken = () => {
+    localStorage.removeItem('token');
+    setToken(null); // Clear the token in the state
+  };
+
   return {
     token,
-    setToken: updateToken
+    setToken: updateToken,
+    clearToken
   };
 }
 
