@@ -3,7 +3,6 @@
 const config = require("./config.json");
 const connectDB = require('./db.js')
 connectDB()
-/* hey */
 
 const userModel = require('./models/Users.js')
 
@@ -34,7 +33,7 @@ app.post('/users', async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = new userModel({ username, password });
+        const user = new User({ username, password });
         await user.save();
         res.status(201).send(user);
     } catch (error) {
