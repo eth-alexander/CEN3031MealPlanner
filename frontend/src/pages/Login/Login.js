@@ -1,33 +1,32 @@
-import React, {useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 
 let match = false;
 let created = false;
+
 async function loginUser(credentials) {
-
   const fetchData = async () => {
-
     await fetch('http://localhost:5005/users', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  .then((response) => response.json())
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
       .then((data) => {
         console.log(data);
         for (let i = 0; i < data.length; i++) {
           if (credentials.username === data[i].username) {
-            console.log(credentials.username)
+            console.log(credentials.username);
             if (credentials.password === data[i].password) {
-              console.log(credentials.password)
+              console.log(credentials.password);
               match = true;
-             }
             }
           }
-        
-      })
-  }
+        }
+      });
+  };
 
   await fetchData();
 
@@ -35,101 +34,105 @@ async function loginUser(credentials) {
     return fetch('http://localhost:5005/login', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-  }
-  else {
-    return 'F'
+      body: JSON.stringify(credentials),
+    }).then((data) => data.json());
+  } else {
+    return 'F';
   }
 }
 
 async function createUser(newUser) {
-  await fetch('http://localhost:5000/users', {
+  await fetch('http://localhost:5005/users', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(newUser)
-  })
-    .then(data => {
-      data.json()
-      created = true
-      console.log(created)
-    })
+    body: JSON.stringify(newUser),
+  }).then((data) => {
+    data.json();
+    created = true;
+    console.log(created);
+  });
 
-    if (created) {
-      return ('Account created. You may login.')
-    }
+  if (created) {
+    return 'Account created. You may login.';
+  }
 }
 
-export default function Login ({setToken}) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [UsernameError, setUsernameError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [account, setAccount] = useState('')
+export default function Login({ setToken }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [UsernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [account, setAccount] = useState('');
 
-  const onButtonClick = async e => {
+  const navigate = useNavigate(); // Use the useNavigate hook
+
+  const onButtonClick = async (e) => {
     e.preventDefault();
     const token = await loginUser({
       username,
-      password
+      password,
     });
-    setToken(token); 
-    console.log(token)
-    
-    setUsernameError('')
-    setPasswordError('')
+
+    if (token !== 'F') {
+      localStorage.setItem('token', token); // Store the token in localStorage
+      setToken(token); // Update the state with the token
+
+      // After setting the token, redirect to the Home page
+      navigate('/home'); // This redirects to the Home page
+    }
+
+    setUsernameError('');
+    setPasswordError('');
 
     if (token === 'F') {
-       setUsernameError('Incorrect username or password') 
+      setUsernameError('Incorrect username or password');
     }
 
     if ('' === username) {
-      setUsernameError('Please enter your username')
-      return
+      setUsernameError('Please enter your username');
+      return;
     }
 
     if ('' === password) {
-      setPasswordError('Please enter your password')
-      return
+      setPasswordError('Please enter your password');
+      return;
     }
-    
-  }
+  };
 
-  const clickCreate = async e =>  {
+  const clickCreate = async (e) => {
     e.preventDefault();
-    
-    setUsernameError('')
-    setPasswordError('')
+
+    setUsernameError('');
+    setPasswordError('');
 
     if ('' === username) {
-      setUsernameError('Please enter a username')
-      return
+      setUsernameError('Please enter a username');
+      return;
     }
 
     if ('' === password) {
-      setPasswordError('Please enter a password')
-      return
+      setPasswordError('Please enter a password');
+      return;
     }
 
     const account = await createUser({
       username,
-      password
+      password,
     });
     console.log(account);
     setAccount(account);
-    
-  }
+  };
 
   return (
     <div className={'mainContainer'}>
       <div className={'titleContainer'}>
-        <div>Login to CHOMP
-        <label className="errorLabel"> {account}</label>
+        <div>
+          Login to CHOMP
+          <label className="errorLabel"> {account}</label>
         </div>
       </div>
       <br />
@@ -162,9 +165,9 @@ export default function Login ({setToken}) {
         <input className={'inputButton'} type="button" onClick={clickCreate} value={'Create Account'} />
       </div>
     </div>
-  )
+  );
 }
 
 Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+  setToken: PropTypes.func.isRequired,
+};
