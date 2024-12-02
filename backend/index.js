@@ -10,6 +10,7 @@ const express = require('express');
 const cors = require('cors');
 const mealModel = require("./models/Meal.js");
 const app = express();
+const jwt = require('jsonwebtoken');
 
 app.use(cors());
 app.use(express.json());
