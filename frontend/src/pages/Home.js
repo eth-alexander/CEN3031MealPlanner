@@ -1,16 +1,15 @@
 import './Home.css';
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Home() {
 
-  const {state} = useLocation();
-  const { user } = state; // Read values passed on state
+  const username = localStorage.getItem('profile')
  
 
   return (
     <>
       <h1 className="Home">Home</h1>
-      Welcome {user}!
+      Welcome {username}!
       <br></br>
       <br></br>
       Browse <a> <Link to="/recipes">Recipes</Link> </a>
