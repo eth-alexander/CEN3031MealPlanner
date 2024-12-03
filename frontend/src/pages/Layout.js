@@ -3,12 +3,15 @@ import { Outlet, Link } from "react-router-dom";
 import useToken from './Login/useToken';
 
 
+
 function Layout() {
 
   const { clearToken } = useToken();  // Get the clearToken function
-
+  
+ 
   const handleLogout = () => {
     clearToken();  // Clear the token
+    localStorage.clear();
     window.location.href = '/login';  // Redirect to login page after logout
   };
 
