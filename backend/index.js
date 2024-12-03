@@ -15,11 +15,24 @@ const jwt = require('jsonwebtoken');
 app.use(cors());
 app.use(express.json());
 
-app.use('/login', (req, res) => {
-    res.send({
-      token: 'test123'
-    });
+app.use('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await userModel.findOne({ username, password });
+
+        if (!user) {
+            return res.status(401).send({ error: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ _id: user._id }, config.secret, { expiresIn: '1h' });
+        res.status(200).send({ token, username: user.username , id: user._id});
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).send({ error: 'Failed to log in.' });
+    }
 });
+
 
 app.get('/users', async (req, res) => {
     try {

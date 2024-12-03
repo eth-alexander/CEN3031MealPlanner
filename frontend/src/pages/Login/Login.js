@@ -6,42 +6,51 @@ let match = false;
 let created = false;
 
 async function loginUser(credentials) {
+  let match = false;
+  let userId = null;
+
+  // Fetch users and check credentials
   const fetchData = async () => {
-    await fetch('http://localhost:5005/users', {
+    const response = await fetch('http://localhost:5005/users', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        for (let i = 0; i < data.length; i++) {
-          if (credentials.username === data[i].username) {
-            console.log(credentials.username);
-            if (credentials.password === data[i].password) {
-              console.log(credentials.password);
-              match = true;
-            }
-          }
-        }
-      });
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    for (let i = 0; i < data.length; i++) {
+      if (credentials.username === data[i].username && credentials.password === data[i].password) {
+        match = true;
+        userId = data[i]._id; // Store userId if credentials match
+        break;
+      }
+    }
   };
 
   await fetchData();
 
   if (match) {
-    return fetch('http://localhost:5005/login', {
+    // If credentials match, request a token
+    const response = await fetch('http://localhost:5005/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials),
-    }).then((data) => data.json());
+    });
+
+    const data = await response.json();
+
+    // Return token and userId
+    return { token: data.token, id: userId };
   } else {
-    return 'F';
+    return 'F'; // Return 'F' if credentials do not match
   }
 }
+
 
 async function createUser(newUser) {
   await fetch('http://localhost:5005/users', {
@@ -72,36 +81,48 @@ export default function Login({ setToken }) {
 
   const onButtonClick = async (e) => {
     e.preventDefault();
-    const token = await loginUser({
+    
+    // Call loginUser with the username and password
+    const response = await loginUser({
       username,
       password,
     });
-
-    if (token !== 'F') {
+  
+    // Check if login was successful (response is not 'F')
+    if (response !== 'F') {
+      const { token, id } = response; // Destructure to get the token and id
+  
+      // Store token, username, and id in localStorage
       localStorage.setItem('token', token); // Store the token in localStorage
+      localStorage.setItem('username', username); // Store the username
+      localStorage.setItem('id', id); // Store the user's id
+  
       setToken(token); // Update the state with the token
-
+  
       // After setting the token, redirect to the Home page
       navigate('/home'); // This redirects to the Home page
     }
-
+  
+    // Reset error messages
     setUsernameError('');
     setPasswordError('');
-
-    if (token === 'F') {
+  
+    // Error handling for invalid credentials or empty fields
+    if (response === 'F') {
       setUsernameError('Incorrect username or password');
     }
-
+  
     if ('' === username) {
       setUsernameError('Please enter your username');
       return;
     }
-
+  
     if ('' === password) {
       setPasswordError('Please enter your password');
       return;
     }
   };
+  
 
   const clickCreate = async (e) => {
     e.preventDefault();

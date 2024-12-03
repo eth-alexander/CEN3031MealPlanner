@@ -1,10 +1,14 @@
-import './Dashboard.css';
+import React from 'react';
 
-function Dashboard() {
+const Dashboard = () => {
+    const username = localStorage.getItem('username'); // Retrieve the username
 
     return (
-        <h1 className='Dashboard'>Dashboard</h1>
+        <div>
+            <h1>Welcome to CHOMP, {username}!</h1>
+            {/* Add other dashboard content here */}
+        </div>
     );
-  };
-  
-  export default Dashboard;
+};
+
+export default Dashboard;
