@@ -1,20 +1,15 @@
 import './Home.css';
-import { Navigate } from "react-router-dom";
-import useToken from './Login/useToken';
+import { useLocation } from "react-router-dom";
 
 function Home() {
-  const { token, setToken } = useToken();
-  console.log("Token:", token);
 
-  // If no token is found, redirect to the login page
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
-
-  // If the user is logged in, show the Home page
+  const {state} = useLocation();
+  const { user } = state; // Read values passed on state
+ 
   return (
     <>
       <h1 className="Home">Home</h1>
+      Welcome {user}!
     </>
   );
 }

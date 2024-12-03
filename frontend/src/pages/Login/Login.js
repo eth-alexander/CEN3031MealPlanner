@@ -82,7 +82,7 @@ export default function Login({ setToken }) {
       setToken(token); // Update the state with the token
 
       // After setting the token, redirect to the Home page
-      navigate('/home'); // This redirects to the Home page
+      navigate('/home', { state: { user: username } }); // This redirects to the Home page
     }
 
     setUsernameError('');
