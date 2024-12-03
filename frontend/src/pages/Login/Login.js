@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 
 let match = false;
 let created = false;
+let taken = false;
 
 async function loginUser(credentials) {
   const fetchData = async () => {
@@ -45,6 +46,22 @@ async function loginUser(credentials) {
 
 async function createUser(newUser) {
   await fetch('http://localhost:5005/users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        if (newUser.username === data[i].username) {
+          taken = true;
+        }
+      }
+    });
+
+  if (!taken) {
+    await fetch('http://localhost:5005/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -55,9 +72,13 @@ async function createUser(newUser) {
     created = true;
     console.log(created);
   });
+}
 
   if (created) {
     return 'Account created. You may login.';
+  }
+  else{
+    return 'Account taken. Input a different username and password.'
   }
 }
 
