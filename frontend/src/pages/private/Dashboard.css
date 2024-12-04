@@ -2,3 +2,6 @@
     text-align: center;
     margin: auto;
 }
+th, td {
+    padding: 15px;
+  }
