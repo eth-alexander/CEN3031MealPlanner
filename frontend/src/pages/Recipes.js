@@ -157,7 +157,6 @@ const RecipesPage = () => {
                                 <tr key={index}>
                                     <td>{meal.name}</td>
                                     <td>{meal.category}</td> 
-                                    //check recipes.css
                                     <div class = 'table'>
                                         <CustomButton label="view" onClick={viewRecipe} data={meal.name} />
                                         <CustomButton label="save" onClick={saveRecipe} data={meal.name} />
