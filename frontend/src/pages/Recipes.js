@@ -1,9 +1,20 @@
 import './Recipes.css';
 import React, { useState, useEffect } from 'react';
 
+function CustomButton(props) {
+    const {label, onClick, data} = props;
+    return (
+        <button onClick={() => onClick(data)}>
+          {label}
+        </button>
+      );
+}
 const RecipesPage = () => {
+    const username = localStorage.getItem('profile');
+
     const [meals, setMeals] = useState([]);
     const [loading, setLoading] = useState(true);
+    //const [save, setSave] = useState('');
 
     // Fetch meals when the component mounts
     useEffect(() => {
@@ -23,9 +34,58 @@ const RecipesPage = () => {
         return <div>Loading...</div>;
     }
 
+    const saveRecipe = async (data) => { //add function
+        
+        let mealId = console.log(data);
+        await fetch('http://localhost:5005/meals', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })
+          .then((response) => response.json())
+          .then((response) => {
+            for (let i = 0; i < response.length; i++) {
+              if (data === response[i].name) {
+                //console.log(response[i]._id);
+                mealId = response[i]._id;
+                console.log(mealId);
+                break;
+              }
+            }
+          });
+
+       await fetch('http://localhost:5005//users/:userId/recipes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(mealId),
+          }).then((res) => res.json());
+    };
+
+    const viewRecipe = async (data) => { //add function
+ 
+        await fetch('http://localhost:5005/meals', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          })
+          .then((response) => response.json())
+          .then((response) => {
+            for (let i = 0; i < response.length; i++) {
+              if (data === response[i].name) {
+                window.open(response[i].source, '_blank').focus();
+                break;
+              }
+            }
+          });
+    };
+    
     return (
         <div>
-            <h1>Recipes</h1>
+            <h1>Recipes  </h1>
             <table>
                 <thead>
                     <tr>
@@ -38,12 +98,15 @@ const RecipesPage = () => {
                         <tr key={index}>
                             <td>{meal.name}</td>
                             <td>{meal.category}</td>
+                            <CustomButton label="view" onClick={viewRecipe} data={meal.name} />
+                            <CustomButton label="save" onClick={saveRecipe} data={meal.name} />
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
-    );
-};
+    )
+}
+
 
 export default RecipesPage;
