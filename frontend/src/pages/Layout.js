@@ -20,7 +20,6 @@ function Layout() {
       <nav> 
            <h1 className='Layout'> <a> <Link to="/">Home</Link> </a>
            <a> <Link to="/recipes">Recipes</Link> </a>
-           <a> <Link to="/products">Products</Link> </a> 
            <a><Link to="/dashboard">Dashboard</Link></a> </h1>
            <button onClick={handleLogout} >Logout</button> {/* Logout button */}
       </nav>

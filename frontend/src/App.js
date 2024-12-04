@@ -24,7 +24,6 @@ function App() {
           <Route element={token ? <Layout /> : <Navigate to="/login" />}>
             <Route path="/home" element={<Home />} />
             <Route path="/recipes" element={<Recipes />} />
-            <Route path="/products" element={<Products />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
 
