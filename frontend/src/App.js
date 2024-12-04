@@ -8,7 +8,7 @@ import Dashboard from "./pages/private/Dashboard";
 import Login from "./pages/Login/Login";  // Assuming Login is defined
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState();
 
   return (
     <Router>
