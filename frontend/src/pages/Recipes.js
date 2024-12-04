@@ -37,6 +37,23 @@ const RecipesPage = () => {
     const saveRecipe = async (data) => { //add function
         
         let mealId = console.log(data);
+        let userId = username;
+        await fetch('http://localhost:5005/users', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+            .then((response) => response.json())
+            .then((res) => {
+              for (let i = 0; i < res.length; i++) {
+                if (username === res[i].username) {
+                  userId = res[i]._id;
+                  console.log(userId);
+                  break;
+                }
+              }
+            });
         await fetch('http://localhost:5005/meals', {
             method: 'GET',
             headers: {
@@ -47,20 +64,20 @@ const RecipesPage = () => {
           .then((response) => {
             for (let i = 0; i < response.length; i++) {
               if (data === response[i].name) {
-                //console.log(response[i]._id);
                 mealId = response[i]._id;
                 console.log(mealId);
                 break;
               }
             }
           });
-
-       await fetch('http://localhost:5005//users/:userId/recipes', {
+        
+        let req = {userId, mealId,}
+       await fetch('http://localhost:5005/users/:userId/recipes', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(mealId),
+            body: JSON.stringify(req)
           }).then((res) => res.json());
     };
 
