@@ -87,7 +87,7 @@ app.delete('/users/:userId/recipes/:recipeId', async (req, res) => {
     const { userId, recipeId } = req.params;
 
     try {
-        const user = await User.findByIdAndUpdate(
+        const user = await userModel.findByIdAndUpdate(
             userId,
             { $pull: { saved_recipes: recipeId } },
             { new: true }

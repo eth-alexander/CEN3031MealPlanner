@@ -1,22 +1,27 @@
 import './Home.css';
-import { Navigate } from "react-router-dom";
-import useToken from './Login/useToken';
+import { Link } from "react-router-dom";
 
 function Home() {
-  const { token, setToken } = useToken();
-  console.log("Token:", token);
 
-  // If no token is found, redirect to the login page
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
+  const username = localStorage.getItem('profile')
+ 
 
-  // If the user is logged in, show the Home page
   return (
     <>
       <h1 className="Home">Home</h1>
+      Welcome {username}!
+      <br></br>
+      <br></br>
+      Browse <a> <Link to="/recipes">Recipes</Link> </a>
+      <br></br>
+      <br></br>
+      Look at saved recipes in your  <a><Link to="/dashboard">Dashboard</Link></a> 
+      
     </>
   );
+  
 }
 
 export default Home;
+
+
