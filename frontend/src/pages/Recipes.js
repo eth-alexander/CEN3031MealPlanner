@@ -35,7 +35,6 @@ const RecipesPage = () => {
     }
 
     const saveRecipe = async (data) => { //add function
-        
         let mealId = console.log(data);
         let userId = username;
         await fetch('http://localhost:5005/users', {
@@ -72,7 +71,9 @@ const RecipesPage = () => {
           });
         
         let req = {userId, mealId,}
-       await fetch('http://localhost:5005/users/:userId/recipes', {
+        console.log(JSON.stringify(req))
+        console.log(userId)
+       await fetch(`http://localhost:5005/users/${userId}/recipes`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
