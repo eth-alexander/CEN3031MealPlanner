@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
-import Products from "./pages/Products";
 import Dashboard from "./pages/private/Dashboard";
 import Login from "./pages/Login/Login";  // Assuming Login is defined
 
