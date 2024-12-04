@@ -128,6 +128,20 @@ const RecipesPage = () => {
     
     return (
         <div>
+            <div class='filters'>
+                {filters_object.map(([key, value]) => (
+                    <div class={'input-checkbox'}>
+                        <input 
+                            id={key}
+                            value="yes"
+                            checked={value}
+                            type="checkbox" 
+                            onChange={()=>handleFilterToggle(key)} 
+                        />
+                        <label for={key}> {key} </label>
+                    </div>
+                ))}
+            </div>
             <h1>Recipes  </h1>
             <table>
                 <thead>
