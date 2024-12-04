@@ -83,6 +83,26 @@ app.post('/users/:userId/recipes', async (req, res) => {
     }
 });
 
+app.delete('/users/:userId/recipes/:recipeId', async (req, res) => {
+    const { userId, recipeId } = req.params;
+
+    try {
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { saved_recipes: recipeId } },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'Recipe removed successfully', saved_recipes: user.saved_recipes });
+    } catch (error) {
+        console.error('Error removing recipe:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 app.listen(5005, () => {
     console.log("app is running");
