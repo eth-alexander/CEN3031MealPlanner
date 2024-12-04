@@ -1,4 +1,3 @@
-import './Dashboard.css';
 import React, { useState, useEffect } from 'react';
 
 function CustomButton(props) {
