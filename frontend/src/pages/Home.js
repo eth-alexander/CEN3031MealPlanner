@@ -15,7 +15,7 @@ function Home() {
       Browse <a> <Link to="/recipes">Recipes</Link> </a>
       <br></br>
       <br></br>
-      Look at saved recipes in your  <a><Link to="/dashboad">Dashboard</Link></a> 
+      Look at saved recipes in your  <a><Link to="/dashboard">Dashboard</Link></a> 
       
     </>
   );
