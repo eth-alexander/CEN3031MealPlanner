@@ -1,0 +1,86 @@
+1) Navigate to frontend
+2) in terminal: npm i -D tailwindcss postcss autoprefixer
+3) in terminal: npx tailwindcss init -p OR npm tailwindcss init -p
+
+4) --------------------------------------------------------------------------
+Go to the tailwind.config.js file
+copy and paste this code
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./app/**/*.{js,ts,jsx,tsx}', "./src/pages/**/*.{html,js}", 
+    "./components/Navbar.js", 
+    "./src/**/*.{js,ts,jsx,tsx}",],
+  theme: {
+    extend: {
+      colors: {
+        primary: "#11362d",
+        secondary: "#EF863E",
+      }
+      
+    },
+  },
+  plugins: [],
+  
+};
+
+5) --------------------------------------------------------------------------
+Go to the postcss.config.js file
+copy and paste this code
+
+module.exports = {
+  content:[
+    './public/index.html',
+  ],
+  plugins: [
+    require('tailwindcss')
+  ],
+  
+}
+6) --------------------------------------------------------------------------
+Go to index.css file 
+copy and paste this code 
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: "Poppins", "sans-serif";
+    }
+    body {
+        background-color:#fdfeff;
+        overflow-x: hidden;
+    }
+    
+}
+
+@layer components{
+    .input-box{
+        @apply w-fit text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none;
+    }
+    .input-checkbox{
+        @apply w-fit text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none;
+    }
+
+    .btn-primary {
+        @apply w-full text-sm bg-primary text-white p-2 rounded my-1 hover:bg-blue-600;
+    }
+    .btn-secondary {
+        @apply w-full text-sm bg-primary text-white p-2 rounded my-1 hover:bg-blue-600;
+    }
+
+    .icon-btn {
+        @apply text-xl text-slate-300 cursor-pointer hover:text-primary;
+    }
+
+    .input-label {
+        @apply text-xs text-slate-400;
+    }
+    
+}
+
+--------------------------------------------------------------------------
