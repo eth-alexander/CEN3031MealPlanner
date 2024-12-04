@@ -14,7 +14,17 @@ const RecipesPage = () => {
 
     const [meals, setMeals] = useState([]);
     const [loading, setLoading] = useState(true);
+    //filters
+    const [filters, setFilters] = useState({});
     //const [save, setSave] = useState('');
+
+    // Handle filter checkbox state change
+    const handleFilterToggle = (category) => {
+        setFilters(prevFilters => ({
+          ...prevFilters,
+          [category]: !prevFilters[category], // Toggle the checked state for this category
+        }));
+      };
 
     // Fetch meals when the component mounts
     useEffect(() => {
@@ -29,6 +39,21 @@ const RecipesPage = () => {
                 setLoading(false);
             });
     }, []);
+
+    // create array of filters with associated boolean values
+    useEffect(() => {
+        const newFilters = {};
+        meals.forEach((meal) => {
+          if (!newFilters.hasOwnProperty(meal.category)) {
+            newFilters[meal.category] = true; // default to checked
+          }
+        });
+        setFilters(newFilters); // Set the filter state after meals are processed
+      }, [meals]);
+
+    //filteredMeals contains desired meals, filters_object is iterable array form of filteredMeals
+    const filteredMeals = meals.filter(meal => filters[meal.category]);
+    const filters_object = Object.entries(filters);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -112,14 +137,26 @@ const RecipesPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {meals.map((meal, index) => (
-                        <tr key={index}>
-                            <td>{meal.name}</td>
-                            <td>{meal.category}</td>
-                            <CustomButton label="view" onClick={viewRecipe} data={meal.name} />
-                            <CustomButton label="save" onClick={saveRecipe} data={meal.name} />
-                        </tr>
-                    ))}
+                    <div>
+                        {filteredMeals.length > 0 ? (
+                            filteredMeals.map((meal, index) => (
+                                <tr key={index}>
+                                    <td>{meal.name}</td>
+                                    <td>{meal.category}</td> 
+                                    //check recipes.css
+                                    <div class = 'table'>
+                                        <CustomButton label="view" onClick={viewRecipe} data={meal.name} />
+                                        <CustomButton label="save" onClick={saveRecipe} data={meal.name} />
+                                    </div>
+                                    
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="2">No meals found for the selected categories.</td>
+                            </tr>
+                        )}   
+                    </div>
                 </tbody>
             </table>
         </div>
