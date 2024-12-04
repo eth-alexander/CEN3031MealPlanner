@@ -1,27 +1,25 @@
 import './Home.css';
-import Login from "./Login/Login";
-import useToken from './Login/useToken';
+import { Link } from "react-router-dom";
 
 function Home() {
 
-  const {token, setToken} = useToken();
-  if(!token) {
-    return (
-      <>
-        <h1 className="Home">Home</h1>
-        <Login setToken={setToken} />
-      </>
-    )
-    
-  }
-  else {
-    return (
-      <>
-        <h1 className="Home">Home</h1>
-      </>
-      );
-  }
-   
-  };
+  const username = localStorage.getItem('profile')
+ 
+
+  return (
+    <>
+      <h1 className="Home">Home</h1>
+      Welcome {username}!
+      <br></br>
+      <br></br>
+      Browse <a> <Link to="/recipes">Recipes</Link> </a>
+      <br></br>
+      <br></br>
+      Look at saved recipes in your  <a><Link to="/dashboard">Dashboard</Link></a> 
+      
+    </>
+  );
   
-  export default Home;
+}
+
+export default Home;
