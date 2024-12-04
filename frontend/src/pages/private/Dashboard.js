@@ -1,14 +1,3 @@
-import './Dashboard.css';
-import React, { useState, useEffect } from 'react';
-
-function CustomButton(props) {
-    const {label, onClick, data} = props;
-    return (
-        <button onClick={() => onClick(data)}>
-          {label}
-        </button>
-      );
-}
 import React, { useState, useEffect } from 'react';
 
 function CustomButton(props) {
