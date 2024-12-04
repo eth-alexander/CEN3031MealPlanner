@@ -2,3 +2,18 @@
     text-align: center;
     margin: auto;
 }
+.filters{
+    display: flex;            /* Enables flexbox */
+    justify-content: flex-start;  /* Align buttons from the start (left-aligned) */
+    gap: 10px;                /* Optional: adds space between buttons */
+    flex-wrap: wrap; 
+    flex-direction: row;
+    
+}
+
+.table{
+    display: flex;            /* Enables flexbox */
+    justify-content: flex-start;  /* Align buttons from the start (left-aligned) */
+    gap: 10px;                /* Optional: adds space between buttons */
+    flex-direction: row;
+}
