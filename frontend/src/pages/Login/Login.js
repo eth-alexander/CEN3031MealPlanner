@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
-
+import './Login.css'
 
 let match = false;
 let created = false;
@@ -153,41 +153,46 @@ export default function Login({ setToken }) {
 
   return (
     <div className={'mainContainer'}>
-      <div className={'titleContainer'}>
-        <div>
-          Login to CHOMP
+      <div className={'input-box-login'}>
+          <h1 className='h1-login'>CHOMP Login</h1>
           <label className="errorLabel"> {account}</label>
-        </div>
-      </div>
-      <br />
-      <div className={'inputContainer'}>
-        <input
-          value={username}
-          placeholder="Enter your username here"
-          onChange={(ev) => setUsername(ev.target.value)}
-          className={'inputBox'}
-        />
-        <label className="errorLabel">{UsernameError}</label>
-      </div>
-      <br />
-      <div className={'inputContainer'}>
-        <input
-          value={password}
-          placeholder="Enter your password here"
-          onChange={(ev) => setPassword(ev.target.value)}
-          className={'inputBox'}
-        />
-        <label className="errorLabel">{passwordError}</label>
-      </div>
-      <br />
-      <div className={'inputContainer'}>
-        <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
-      </div>
-      <br />
-      <div className={'inputContainer'}>
-        New user? Enter a username and password. Then click 'Create Account.'
-        <input className={'inputButton'} type="button" onClick={clickCreate} value={'Create Account'} />
-      </div>
+          
+          <input
+            value={username}
+            placeholder="Enter your username here"
+            onChange={(ev) => setUsername(ev.target.value)}
+            className={'input-box'}
+          />
+          <label className="errorLabel">{UsernameError}</label>
+        
+          <input
+            value={password}
+            placeholder="Enter your password here"
+            onChange={(ev) => setPassword(ev.target.value)}
+            className={'input-box'}
+          />
+          <label className="errorLabel">{passwordError}</label>
+          
+          <div className={'inputContainer'}>
+            <input 
+              className={'btn-secondary'} 
+              type="button" 
+              onClick={onButtonClick} 
+              value={'Log in'} />
+          </div>
+        
+          
+          <p className='p-login'>New user? Enter a username and password. </p>
+          <p className='p-login'>Then click 'Create Account.'</p>
+          <input 
+            className={'btn-secondary'} 
+            type="button" 
+            onClick={clickCreate} 
+            value={'Create Account'} 
+          />
+          
+        
+      </div> 
     </div>
   );
 }
@@ -195,4 +200,3 @@ export default function Login({ setToken }) {
 Login.propTypes = {
   setToken: PropTypes.func.isRequired,
 };
-

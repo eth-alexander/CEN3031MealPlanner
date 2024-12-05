@@ -3,3 +3,24 @@
     margin: auto;
 }
 
+.filters-container{
+    display: flex;
+    margin: 2vw;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;  /* Optional: Adds space between the input boxes */
+} 
+
+
+.filters{
+    display: flex;
+    margin-inline: 5vw;
+    gap: 10px;  /* Optional: Adds space between the input boxes */
+    flex-wrap: wrap; /* Optional: Ensures inputs wrap on smaller screens */
+}
+
+.table{
+    display: flex;
+    gap: 10px;  /* Optional: Adds space between the input boxes */
+    flex-wrap: wrap; /* Optional: Ensures inputs wrap on smaller screens */
+}

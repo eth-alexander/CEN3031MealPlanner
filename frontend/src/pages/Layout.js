@@ -18,10 +18,12 @@ function Layout() {
   return (
     <>
       <nav> 
-           <h1 className='Layout'> <a> <Link to="/">Home</Link> </a>
-           <a> <Link to="/recipes">Recipes</Link> </a>
-           <a><Link to="/dashboard">Dashboard</Link></a> </h1>
-           <button onClick={handleLogout} >Logout</button> {/* Logout button */}
+          <div className='Layout'> 
+            <a> <Link className="nav-link" to="/">Home</Link></a>
+            <a> <Link className="nav-link" to="/recipes">Recipes</Link></a>
+            <a> <Link className="nav-link" to="/dashboard">Dashboard</Link></a> 
+            <button className="btn-primary" onClick={handleLogout}>Logout</button> 
+          </div>
       </nav>
 
       <Outlet />
