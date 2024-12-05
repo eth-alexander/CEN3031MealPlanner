@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: "Poppins", "sans-serif";
+    }
+    body {
+        background-color:#fdfeff;
+        overflow-x: hidden;
+    }
+   
+    
+}
+
+@layer components{
+    .h1{
+      @apply text-xl mx-5;
+    }
+    .h1-login{
+      @apply text-xl;
+    }
+    .p-login{
+      @apply text-sm;
+    }
+    .a{
+      @apply text-xl mx-5;
+    }
+    .link-home{
+      @apply w-fit;
+    }
+    .input-box{
+        @apply w-fit text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none;
+    }
+    .input-box-welcome{
+      @apply w-fit h-fit text-sm bg-transparent border-[1.5px] px-10 py-10 rounded mb-4 outline-none;
+    }
+    .input-box-login{
+      @apply flex flex-col items-center w-fit text-sm bg-transparent border-[1.5px] px-10 py-10 outline-none;
+    }
+    
+
+    .btn-primary {
+        @apply w-fit text-sm bg-primary text-white p-2 rounded my-1 mx-5 hover:bg-blue-600;
+    }
+    .btn-secondary {
+        @apply w-fit text-sm bg-primary text-white p-2 rounded my-1 hover:bg-blue-600;
+    }
+
+    .icon-btn {
+        @apply text-xl text-slate-300 cursor-pointer hover:text-primary;
+    }
+
+    .input-label {
+        @apply text-xs text-slate-400;
+    }
+
+
+    /* Hide the default checkbox */
+    .input-checkbox input {
+        @apply hidden; /* Hides the default checkbox */
+    }
+
+    /* Custom checkbox appearance */
+    .checkbox-custom {
+        @apply inline-block w-4 h-4 border-2 border-gray-400 rounded-full relative transition-all duration-200 ease-in-out; /* Custom size and border */
+    }
+
+    /* When the checkbox is checked */
+    .input-checkbox input:checked + .checkbox-custom {
+        @apply bg-blue-500 border-blue-500; /* Checked state - blue background */
+    }
+
+    /* Add the round checkmark when the checkbox is checked */
+    .input-checkbox input:checked + .checkbox-custom::after {
+        content: '';
+        position: absolute; /* Absolute positioning */
+        top: 50%; /* Position it at the center vertically */
+        left: 50%; /* Position it at the center horizontally */
+        width: 0.5rem; /* Adjust the size of the checkmark (smaller relative to the checkbox) */
+        height: 0.5rem; /* Adjust the size of the checkmark (smaller relative to the checkbox) */
+        background-color: white; /* Color of the checkmark */
+        border-radius: 9999px; /* Round the checkmark */
+        transform: translate(-50%, -50%); /* This ensures the checkmark is centered perfectly */
+    }
+
+    /* Hover effect on the custom checkbox */
+    .checkbox-custom:hover {
+        @apply border-gray-600; /* Darker border color on hover */
+    }
+
+    /* Focus state for accessibility */
+    .input-checkbox input:focus + .checkbox-custom {
+        @apply ring-1 ring-blue-300; /* Focus ring on the checkbox */
+    }
+
+    /* Label styling (optional) */
+    .input-checkbox label {
+        @apply cursor-pointer; /* Make the label clickable */
+    }
+    
+}
