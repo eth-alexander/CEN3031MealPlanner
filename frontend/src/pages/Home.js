@@ -8,14 +8,20 @@ function Home() {
 
   return (
     <>
-      <h1 className="Home">Home</h1>
-      Welcome {username}!
-      <br></br>
-      <br></br>
-      Browse <a> <Link to="/recipes">Recipes</Link> </a>
-      <br></br>
-      <br></br>
-      Look at saved recipes in your  <a><Link to="/dashboard">Dashboard</Link></a> 
+      <div className='home-container'>
+        <div className='input-box-welcome'>
+          <p className="h1">Welcome {username}!</p>
+          <br></br>
+          <br></br>
+          <p className='h1'>Browse recipe database</p> <a className='a'> <Link className='home-link'to="/recipes">Recipes</Link> </a>
+          <br></br>
+          <br></br>
+          <p className='h1'>View saved recipes</p> <a className='a'><Link className='home-link' to="/dashboard">Dashboard</Link></a> 
+        </div>
+
+      </div>
+      
+      
       
     </>
   );
@@ -23,5 +29,8 @@ function Home() {
 }
 
 export default Home;
+
+
+
 
 
