@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 function CustomButton(props) {
     const {label, onClick, data} = props;
     return (
-        <button onClick={() => onClick(data)}>
+        <button className="btn-secondary"onClick={() => onClick(data)}>
           {label}
         </button>
       );
@@ -125,51 +125,58 @@ const RecipesPage = () => {
             }
           });
     };
+
+    
     
     return (
         <div>
-            <div class='filters'>
-                {filters_object.map(([key, value]) => (
-                    <div class={'input-checkbox'}>
-                        <input 
-                            id={key}
-                            value="yes"
-                            checked={value}
-                            type="checkbox" 
-                            onChange={()=>handleFilterToggle(key)} 
-                        />
-                        <label for={key}> {key} </label>
-                    </div>
-                ))}
+            <div class='filters-container'>
+                <h1 className='h1'>Selected Filters</h1>
+                <div class='filters'>
+                    {filters_object.map(([key, value]) => (
+                        <div class={'input-checkbox'}>
+                            <input 
+                                id={key}
+                                value="yes"
+                                checked={value}
+                                type="checkbox" 
+                                onChange={()=>handleFilterToggle(key)} 
+                            />
+                            <label htmlFor={key} className="checkbox-custom"></label>
+                            <label htmlFor={key} className="ml-2">{key}</label>
+                        </div>
+                    ))}
+                </div>
+                
+                
             </div>
-            <h1>Recipes  </h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Category</th>
+            
+            <table class="min-w-full table-fixed border-collapse">
+                <thead class="border-t">
+                    <tr class="bg-gray-200">
+                        <th class="px-4 py-2 text-left text-m font-semibold text-gray-700 w-1/3">Name</th>
+                        <th class="px-4 py-2 text-left text-m font-semibold text-gray-700 w-1/3">Category</th>
+                        <th class="px-4 py-2 text-left text-m font-semibold text-gray-700 w-1/3">Actions</th> 
                     </tr>
                 </thead>
                 <tbody>
-                    <div>
-                        {filteredMeals.length > 0 ? (
-                            filteredMeals.map((meal, index) => (
-                                <tr key={index}>
-                                    <td>{meal.name}</td>
-                                    <td>{meal.category}</td> 
-                                    <div class = 'table'>
-                                        <CustomButton label="view" onClick={viewRecipe} data={meal.name} />
-                                        <CustomButton label="save" onClick={saveRecipe} data={meal.name} />
-                                    </div>
+                    {filteredMeals.length > 0 ? (
+                        filteredMeals.map((meal, index) => (
+                            <tr class="border-t bg-gray-100" key={index}>
+                                <td class="px-4 py-1 text-sm text-gray-800 w-1/3">{meal.name}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800 w-1/3">{meal.category}</td> 
+                                <td class="px-4 py-1 text-sm text-gray-800 flex space-x-2 w-1/3"> 
+                                    <CustomButton label="view" onClick={() => viewRecipe(meal.name)} data={meal.name} />
+                                    <CustomButton label="save" onClick={() => saveRecipe(meal.name)} data={meal.name} />
+                                </td>
                                     
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="2">No meals found for the selected categories.</td>
                             </tr>
-                        )}   
-                    </div>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="3" class="px-4 py-2 text-center text-gray-800">No meals found for the selected categories.</td>
+                        </tr>
+                    )}       
                 </tbody>
             </table>
         </div>
