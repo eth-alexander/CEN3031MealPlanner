@@ -1,4 +1,28 @@
 .Home {
     text-align: center;
     margin: auto;
+    
 }
+
+.home-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 100vw;
+}
+
+.home-link:link, .home-link:visited {
+    background-color: #4678c9;
+    color: white;
+    padding: 10px 25px;
+    width: 20vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  
+  .home-link:hover, .home-link:active {
+    background-color: blue;
+  }
