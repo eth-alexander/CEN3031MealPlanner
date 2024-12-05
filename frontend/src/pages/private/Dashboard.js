@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 function CustomButton(props) {
     const {label, onClick, data} = props;
     return (
-        <button onClick={() => onClick(data)}>
+        <button className="btn-secondary" onClick={() => onClick(data)}>
           {label}
         </button>
       );
@@ -78,25 +78,26 @@ function Dashboard() {
   };
 
   return (
-      <>
-          <h1 className='Dashboard'>Dashboard</h1>
-          <p>Hi {username}!</p>
-          <table>
-              <thead>
-                  <tr>
-                      <th>Name</th>
-                      <th>Category</th>
-                      <th>Actions</th>
+      <>  
+        <div className='dashboard-heading'>
+            <h1 className='h1'>{username}'s Dashboard</h1>
+        </div> 
+          <table class="min-w-full table-fixed border-collapse">
+              <thead class="border-t">
+                  <tr class="bg-gray-200">
+                      <th class="px-4 py-2 text-left text-m font-semibold text-gray-700 w-1/3">Name</th>
+                      <th class="px-4 py-2 text-left text-m font-semibold text-gray-700 w-1/3">Category</th>
+                      <th class="px-4 py-2 text-left text-m font-semibold text-gray-700 w-1/3">Actions</th>
                   </tr>
               </thead>
               <tbody>
                   {meals.map((meal, index) => (
-                      <tr key={index}>
-                          <td>{meal.name}</td>
-                          <td>{meal.category}</td>
-                          <td>
-                              <CustomButton label="View" onClick={viewRecipe} data={meal.name} />
-                              <CustomButton label="Unsave" onClick={() => unsaveRecipe(meal._id)} data={meal._id} />
+                      <tr class="border-t bg-gray-100" key={index}>
+                          <td class="px-4 py-1 text-sm text-gray-800 w-1/3">{meal.name}</td>
+                          <td class="px-4 py-1 text-sm text-gray-800 w-1/3">{meal.category}</td>
+                          <td class="px-4 py-1 text-sm text-gray-800 flex space-x-2 w-1/3">
+                            <CustomButton label="View" onClick={viewRecipe} data={meal.name} />
+                            <CustomButton label="Unsave" onClick={() => unsaveRecipe(meal._id)} data={meal._id} />
                           </td>
                       </tr>
                   ))}
